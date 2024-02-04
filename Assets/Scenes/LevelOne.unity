@@ -133,9 +133,9 @@ GameObject:
   m_Component:
   - component: {fileID: 104469045}
   - component: {fileID: 104469048}
-  - component: {fileID: 104469049}
   - component: {fileID: 104469050}
   - component: {fileID: 104469051}
+  - component: {fileID: 104469052}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -170,18 +170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &104469049
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104469044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &104469050
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -205,7 +193,7 @@ MonoBehaviour:
   m_RollDamping: 0
   m_AngularDamping: 0
   m_Heading:
-    m_Definition: 2
+    m_Definition: 0
     m_VelocityFilterStrength: 4
     m_Bias: 0
   m_RecenterToTargetHeading:
@@ -252,7 +240,19 @@ MonoBehaviour:
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0.5
   m_FrequencyGain: 1
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: -32.497528, y: -83.986176, z: -248.70145}
+--- !u!114 &104469052
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104469044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &203621343
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,16 +352,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _controller: {fileID: 0}
+  _controller: {fileID: 203621349}
   _gravity: -5
-  _jumpHeight: 3
+  _jumpHeight: 10
   _velocity: {x: 0, y: 0, z: 0}
   _groundCheck: {fileID: 843454340}
   _groudnRadius: 0.5
   _groundMaks:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   _isGrounded: 0
+  _vcam: {fileID: 1100497788}
+  _mcam: {fileID: 0}
 --- !u!143 &203621349
 CharacterController:
   m_ObjectHideFlags: 0
@@ -655,6 +657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1100497789}
   - component: {fileID: 1100497788}
+  - component: {fileID: 1100497790}
   m_Layer: 0
   m_Name: 3rd Person Camera
   m_TagString: Untagged
@@ -688,7 +691,7 @@ MonoBehaviour:
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 0
+    ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
     FocusDistance: 10
@@ -717,6 +720,22 @@ Transform:
   - {fileID: 104469045}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1100497790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100497787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerIndex: -1
+  AutoEnableInputs: 1
+  XYAxis: {fileID: -5630151704836100654, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  ZAxis: {fileID: 0}
 --- !u!1001 &1833586289
 PrefabInstance:
   m_ObjectHideFlags: 0

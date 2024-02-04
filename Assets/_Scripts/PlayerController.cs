@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
+using static UnityEngine.Camera;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -23,8 +25,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask _groundMaks;
     [SerializeField] bool _isGrounded;
 
+    [Header("Virtual Camera")]
+    [SerializeField] CinemachineVirtualCamera _vcam;
+
+    [Header("Main Camera")]
+    [SerializeField] Camera _mcam;
+
     void Awake()
     {
+        _vcam = GetComponent<CinemachineVirtualCamera>();
+        _mcam = GetComponent<Camera>();
         _controller = GetComponent<CharacterController>();
         _inputs = new PlayerControl();
         _inputs.Player.Move.performed += context => _move = context.ReadValue<Vector2>();
@@ -47,9 +57,31 @@ public class PlayerController : MonoBehaviour
             _velocity.y = -2.0f;
         }
         Vector3 movement = new Vector3(_move.x, 0.0f, _move.y) * _speed * Time.fixedDeltaTime;
-        _controller.Move(movement);
+        Vector3 cameraRelativeMovement = ConvertToCameraSpace(movement);
+        _controller.Move(cameraRelativeMovement);
         _velocity.y += _gravity * Time.fixedDeltaTime;
         _controller.Move(_velocity * Time.fixedDeltaTime);
+        //Debug.Log(_vcam.GetCinemachineComponent<CinemachineOrbitalTransposer>().m_XAxis.Value);
+    }
+
+    Vector3 ConvertToCameraSpace(Vector3 vectorToRotate)
+    {
+        float currentYValue = vectorToRotate.y;
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+
+        cameraForward = cameraForward.normalized;
+        cameraRight = cameraRight.normalized;
+
+        Vector3 cameraForwardZProduct = vectorToRotate.z * cameraForward;
+        Vector3 cameraRightXProduct = vectorToRotate.x * cameraRight;
+
+        Vector3 vectorRotatedToCameraSpace = cameraForwardZProduct + cameraRightXProduct;
+        vectorRotatedToCameraSpace.y = currentYValue;
+        return vectorRotatedToCameraSpace;
     }
 
    void OnDrawGizmos()
