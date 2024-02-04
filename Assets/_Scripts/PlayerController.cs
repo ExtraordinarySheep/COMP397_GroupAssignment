@@ -34,11 +34,15 @@ public class PlayerController : MonoBehaviour
     [Header("Main Camera")]
     [SerializeField] Camera _mcam;
 
-    public GameObject hpBarSliderForPlayer;
+    [Header("Health")]
+    [SerializeField] public GameObject hpBarSliderForPlayer;
     private Slider hpSlider;
-    public int health = 100;
+    int _health = 100;
     AudioManager am;
     AudioSource _audioSource;
+
+    [Header("Respawn Transform")]
+    [SerializeField] Transform _respawn; 
 
     void Awake()
     {
@@ -55,7 +59,7 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
         HealthBarForPlayer();
-        if (health <= 0)
+        if (_health <= 0)
         {
             _audioSource.Stop();
             Die();
@@ -123,17 +127,17 @@ public class PlayerController : MonoBehaviour
     }
     public void Damage(int amount)
     {
-        health -= amount;
+        _health -= amount;
 
         // Update HP bar value  
         if (hpBarSliderForPlayer != null)
         {
             Debug.Log("Took " + amount + " damage From Player Controller");
             // Ensure that the health value stays within the range [0, 100]
-            health = Mathf.Clamp(health, 0, 100);
+            _health = Mathf.Clamp(_health, 0, 100);
 
             // Calculate the normalized value for the slider based on the health
-            float normalizedHealth = (float)health / 100f;
+            float normalizedHealth = (float)_health / 100f;
 
             // Update the slider value
             hpSlider.value = normalizedHealth;
@@ -160,7 +164,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("DeathZone"))
         {
             _controller.enabled = false;
-            transform.position = new Vector3(0.0f, 1.0f, 0.0f);
+            transform.position = _respawn.position;
             Damage(25); 
             _controller.enabled = true;
         }
