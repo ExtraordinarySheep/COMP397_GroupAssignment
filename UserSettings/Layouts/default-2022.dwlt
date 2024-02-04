@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1007
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Game
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 499
     height: 957
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -321,7 +321,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/SceneAssets/SimpleNaturePack/Prefabs
+    - Assets/_Scripts
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -329,16 +329,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/SceneAssets/SimpleNaturePack/Prefabs
+  - Assets/_Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\qasim\OneDrive\Documents\GitHub\COMP397_GroupAssignment
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0a5d0000
-    m_LastClickedID: 23818
-    m_ExpandedIDs: 00000000c05c0000065d00000c5d000000ca9a3b
+    m_SelectedIDs: 8c5e0000
+    m_LastClickedID: 24204
+    m_ExpandedIDs: 000000004a5e0000905e0000965e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -366,7 +366,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c05c0000
+    m_ExpandedIDs: 000000004a5e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -508,7 +508,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 2efbffff845c0000
+      m_ExpandedIDs: 12fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -875,9 +875,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.9635174, y: -9.249037, z: -35.358097}
+    m_Target: {x: -3.2342494, y: -14.086489, z: -33.216473}
     speed: 2
-    m_Value: {x: -0.9635174, y: -9.249037, z: -35.358097}
+    m_Value: {x: -3.2342494, y: -14.086489, z: -33.216473}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -927,9 +927,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.0037643092, y: 0.9797501, z: -0.19933033, w: -0.0185199}
   m_Size:
-    m_Target: 25.720404
+    m_Target: 29.753479
     speed: 2
-    m_Value: 25.720404
+    m_Value: 29.753479
   m_Ortho:
     m_Target: 0
     speed: 2
