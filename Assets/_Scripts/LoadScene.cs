@@ -17,7 +17,7 @@ public class LoadScene : MonoBehaviour
     }
     public void MainMenuButton()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void LOAD_SCENE(string sceneName)
