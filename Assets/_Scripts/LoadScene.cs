@@ -24,4 +24,17 @@ public class LoadScene : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+    public void ExitButtonClicked()
+    {
+        //#if UNITY_EDITOR
+        //#else
+        //    Application.Quit();
+        //#endif
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+    }
 }
