@@ -55,6 +55,9 @@ public class PlayerController : MonoBehaviour
         _inputs.Player.Jump.performed += ctx => Jump();
         _audioSource = GameObject.Find("AudioController").GetComponent<AudioSource>();
 
+
+        //Hide Cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
     public void Update()
     {
