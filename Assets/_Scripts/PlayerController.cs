@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
         _controller.Move(cameraRelativeMovement);
         _velocity.y += _gravity * Time.fixedDeltaTime;
         _controller.Move(_velocity * Time.fixedDeltaTime);
-        //Debug.Log(_vcam.GetCinemachineComponent<CinemachineOrbitalTransposer>().m_XAxis.Value);
+        //Debug.Log(_isGrounded);
     }
 
     Vector3 ConvertToCameraSpace(Vector3 vectorToRotate)
