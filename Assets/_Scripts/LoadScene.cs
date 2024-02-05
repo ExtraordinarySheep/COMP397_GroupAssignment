@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour
 {
+    public GameObject pausePanel;
     void Start()
     {
         Cursor.visible = true;
@@ -36,5 +37,17 @@ public class LoadScene : MonoBehaviour
 #else
             Application.Quit();
 #endif
+    }
+
+    public void Resume()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void Pause()
+    {
+        pausePanel.SetActive(true);
+        Time.timeScale = 0;
     }
 }
