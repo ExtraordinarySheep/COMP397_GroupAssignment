@@ -1,102 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem.HID;
+
+
+public enum EnemyStates
+{
+    Patrolling,
+    Chasing
+}
 
 public class EnemyController : MonoBehaviour
 {
-    public StateMachine stateMachine;
-    public StateMachine.State idle, chase; //add attack later 
-    public GameObject player;
-    public float senser = 10;
-    public float speed = 2;
-    float _objectFOV; 
+    [SerializeField] private List<Transform> points;
+    [SerializeField] private int index = 0;
+    [SerializeField] private Transform player;
+    [SerializeField] private LayerMask mask;
+    [SerializeField] private int viewDistance = 10;
+    [SerializeField] private bool inRange = false;
+    Vector3 destination;
+    NavMeshAgent agent;
+    EnemyStates enemyState = EnemyStates.Patrolling;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _objectFOV = Mathf.Cos(89 / 2f * Mathf.Deg2Rad); // in Rad
-        stateMachine = new StateMachine();
-        idle = stateMachine.CreateState("Idle");
-        idle.onFrame = IdleOnFrame;
-
-        chase = stateMachine.CreateState("Chase");
-        chase.onFrame = ChaseOnFrame;
-
-
+        agent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        destination = points[index].position;
+        agent.destination = destination;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        stateMachine.Update();
-    }
+        if (Vector3.Distance(transform.position, player.position) > viewDistance) inRange = false;
 
-    //FSM:
-    void IdleOnFrame()
-    {
-        //Do nothing for now
-
-        //Idle -> chase
-        if (SensePlayer(this.transform.position, player.transform.position, this.transform.forward, _objectFOV, senser))
+        if (enemyState == EnemyStates.Chasing && inRange)
         {
-            //Debug.Log("Transitioning from Idle to Chase");
-            stateMachine.ChangeState(chase);
-        }
-
-    }
-    void ChaseOnFrame()
-    {
-        //Debug.Log("Chase.onFrame");
-        Chase();
-
-        // Look at the player
-        transform.LookAt(player.transform);
-
-        //Transition to chase ->idle
-        if (!WithinRange(this.transform.position, player.transform.position, senser))
-        {
-            //Debug.Log("Transitioning from Chase to Idle");
-            stateMachine.ChangeState(idle);
-        }
-
-        //add transition chase ->attack
-    }
-    private void Chase()
-    {
-        Vector3 playerHeading = (player.transform.position - this.transform.position);
-        float playerDistance = playerHeading.magnitude;
-        playerHeading.Normalize();
-
-        Vector3 movement = playerHeading * speed * Time.deltaTime; //m/s but we want m/frame so multiply by s/frame
-        Vector3.ClampMagnitude(movement, playerDistance);
-        this.transform.position += movement;
-    }
-    public static bool SensePlayer(Vector3 start, Vector3 playerPos, Vector3 thisForward, float cutOff, float distance)
-    {
-
-        Vector3 playerHeading = (playerPos - start).normalized;
-        float cosAngle = Vector3.Dot(playerHeading, thisForward);
-
-        if (cosAngle > cutOff && Vector3.Distance(start, playerPos) <= distance)
-        {
-            return true;
+            destination = player.position;
         }
         else
         {
-            return false;
+            if (Vector3.Distance(destination, agent.transform.position) < 1f)
+            {
+                index = (index + 1) % points.Count;
+                destination = points[index].position;
+            }
         }
+        agent.destination = destination;
 
     }
-    public static bool WithinRange(Vector3 start, Vector3 playerPos, float distance)
+
+    private void FixedUpdate()
     {
-        if (Vector3.Distance(start, playerPos) <= distance)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, viewDistance, mask))
         {
-            return true;
+            if (hit.transform.gameObject.name.Equals("Player"))
+            {
+                inRange = true;
+                enemyState = EnemyStates.Chasing;
+            }
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
         }
         else
         {
-            return false;
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * viewDistance, Color.red);
         }
     }
 }

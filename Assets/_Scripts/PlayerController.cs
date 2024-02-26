@@ -171,6 +171,9 @@ public class PlayerController : MonoBehaviour
             Damage(25); 
             _controller.enabled = true;
         }
+        else if (other.CompareTag("Enemy"))
+        {
+            Damage(5);
+        }
     }
-
 }
