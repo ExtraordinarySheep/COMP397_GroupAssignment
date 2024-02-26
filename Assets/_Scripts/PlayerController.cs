@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 {
     PlayerControl _inputs;
     Vector2 _move;
+    public Vector2 mouseDelta;
 
     [SerializeField] float _speed;
 
@@ -54,6 +55,11 @@ public class PlayerController : MonoBehaviour
         _inputs.Player.Move.canceled += ctx => _move = Vector2.zero;
         _inputs.Player.Jump.performed += ctx => Jump();
         _audioSource = GameObject.Find("AudioController").GetComponent<AudioSource>();
+
+
+        //Hide Cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     public void Update()
     {
@@ -63,6 +69,7 @@ public class PlayerController : MonoBehaviour
             _audioSource.Stop();
             Die();
         }
+        mouseDelta = Mouse.current.delta.ReadValue();
     }
     void OnEnable()
     {
