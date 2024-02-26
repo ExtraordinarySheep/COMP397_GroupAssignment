@@ -54,10 +54,6 @@ public class PlayerController : MonoBehaviour
         _inputs.Player.Move.canceled += ctx => _move = Vector2.zero;
         _inputs.Player.Jump.performed += ctx => Jump();
         _audioSource = GameObject.Find("AudioController").GetComponent<AudioSource>();
-
-
-        //Hide Cursor
-        Cursor.lockState = CursorLockMode.Locked;
     }
     public void Update()
     {
@@ -174,6 +170,10 @@ public class PlayerController : MonoBehaviour
         else if (other.CompareTag("Enemy"))
         {
             Damage(5);
+        }
+        else if (other.CompareTag("Goal"))
+        {
+            LoadScene.Instance().MainMenuButton();
         }
     }
 }

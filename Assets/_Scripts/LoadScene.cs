@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour
 {
+    private static LoadScene instance = null;
+    private LoadScene() { }
+    public static LoadScene Instance()
+    {
+        return instance ??= new LoadScene();
+    }
+
     public GameObject pausePanel;
     void Start()
     {
@@ -37,17 +44,5 @@ public class LoadScene : MonoBehaviour
 #else
             Application.Quit();
 #endif
-    }
-
-    public void Resume()
-    {
-        pausePanel.SetActive(false);
-        Time.timeScale = 1;
-    }
-
-    public void Pause()
-    {
-        pausePanel.SetActive(true);
-        Time.timeScale = 0;
     }
 }
