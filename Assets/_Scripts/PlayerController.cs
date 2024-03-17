@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using static UnityEngine.Camera;
 using Slider = UnityEngine.UI.Slider;
+using UnityEngine.UI; 
 using System;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 mouseDelta;
 
     [SerializeField] float _speed;
+
+    [Header("Joystick")]
+    [SerializeField] Joystick _joystick; 
 
     [Header("Character Controller")]
     [SerializeField] CharacterController _controller;
@@ -31,6 +35,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Virtual Camera")]
     [SerializeField] CinemachineVirtualCamera _vcam;
+    [SerializeField] Button _turnCamLeftBtn;
+    [SerializeField] Button _turnCamRightBtn;
+
 
     [Header("Main Camera")]
     [SerializeField] Camera _mcam;
@@ -55,7 +62,8 @@ public class PlayerController : MonoBehaviour
         _inputs.Player.Move.canceled += ctx => _move = Vector2.zero;
         _inputs.Player.Jump.performed += ctx => Jump();
         _audioSource = GameObject.Find("AudioController").GetComponent<AudioSource>();
-
+        _turnCamLeftBtn.onClick.AddListener(() => ConvertToCameraSpace(new Vector3(-1,-1,0)));
+        _turnCamRightBtn.onClick.AddListener(() => ConvertToCameraSpace(new Vector3(1, 1, 0)));
 
         //Hide Cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -85,6 +93,7 @@ public class PlayerController : MonoBehaviour
         {
             _velocity.y = -2.0f;
         }
+        _move = _joystick.Direction; 
         Vector3 movement = new Vector3(_move.x, 0.0f, _move.y) * _speed * Time.fixedDeltaTime;
         Vector3 cameraRelativeMovement = ConvertToCameraSpace(movement);
         _controller.Move(cameraRelativeMovement);
