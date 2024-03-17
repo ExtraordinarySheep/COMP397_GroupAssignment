@@ -16,8 +16,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float _speed;
 
-    [Header("Joystick")]
-    [SerializeField] Joystick _joystick; 
+    [Header("Mobile Controls")]
+    [SerializeField] Joystick _joystick;
+    [SerializeField] Button _turnCamLeftBtn;
+    [SerializeField] Button _turnCamRightBtn;
+    [SerializeField] int _rotationValue;
+    [SerializeField] Button _jumpBtn;
+
 
     [Header("Character Controller")]
     [SerializeField] CharacterController _controller;
@@ -35,9 +40,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Virtual Camera")]
     [SerializeField] CinemachineFreeLook _vcam;
-    [SerializeField] Button _turnCamLeftBtn;
-    [SerializeField] Button _turnCamRightBtn;
-    [SerializeField] int _rotationValue; 
+
 
 
     [Header("Main Camera")]
@@ -65,6 +68,7 @@ public class PlayerController : MonoBehaviour
         _audioSource = GameObject.Find("AudioController").GetComponent<AudioSource>();
         _turnCamLeftBtn.onClick.AddListener(() => RotateCamera(-_rotationValue));
         _turnCamRightBtn.onClick.AddListener(() => RotateCamera(_rotationValue));
+        _jumpBtn.onClick.AddListener(Jump);
 
         //Hide Cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -94,12 +98,21 @@ public class PlayerController : MonoBehaviour
         {
             _velocity.y = -2.0f;
         }
-        _move = _joystick.Direction; 
-        Vector3 movement = new Vector3(_move.x, 0.0f, _move.y) * _speed * Time.fixedDeltaTime;
+
+        Vector2 joystickMove = _joystick.Direction;
+        bool isJoystickActive = joystickMove.magnitude > 0.1f; 
+
+        // Determine the final movement input based on input state (allows for input system to still work) 
+        Vector2 finalMoveInput = isJoystickActive ? joystickMove : (_inputs.Player.Move.ReadValue<Vector2>());
+        Vector3 movement = new Vector3(finalMoveInput.x, 0.0f, finalMoveInput.y) * _speed * Time.fixedDeltaTime;
+        //Vector3 movement = new Vector3(_move.x, 0.0f, _move.y) * _speed * Time.fixedDeltaTime;
+
         Vector3 cameraRelativeMovement = ConvertToCameraSpace(movement);
         _controller.Move(cameraRelativeMovement);
         _velocity.y += _gravity * Time.fixedDeltaTime;
         _controller.Move(_velocity * Time.fixedDeltaTime);
+        //_move = _joystick.Direction;
+
         //Debug.Log(_isGrounded);
     }
 
