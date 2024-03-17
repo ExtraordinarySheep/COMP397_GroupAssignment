@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Button _turnCamLeftBtn;
     [SerializeField] Button _turnCamRightBtn;
     [SerializeField] int _rotationValue;
+    [SerializeField] float _currentRotationValueY;
     [SerializeField] Button _jumpBtn;
 
 
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
         _turnCamLeftBtn.onClick.AddListener(() => RotateCamera(-_rotationValue));
         _turnCamRightBtn.onClick.AddListener(() => RotateCamera(_rotationValue));
         _jumpBtn.onClick.AddListener(Jump);
-
+            
         //Hide Cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -83,6 +84,15 @@ public class PlayerController : MonoBehaviour
             Die();
         }
         mouseDelta = Mouse.current.delta.ReadValue();
+
+        //prevent joystick from moving screen 
+        bool isJoystickActive = _joystick.Direction.magnitude > 0.5f;
+        if (isJoystickActive)
+        {
+            //_vcam.m_XAxis.Value = _currentRotationValue;
+            _vcam.m_YAxis.Value = _currentRotationValueY;
+        }
+
     }
     void OnEnable()
     {
@@ -140,12 +150,14 @@ public class PlayerController : MonoBehaviour
     {
         if (_vcam != null)
         {
-            _vcam.m_XAxis.Value += angle; 
+            _vcam.m_XAxis.Value += angle;
+
         }
         else
         {
             Debug.LogError("CinemachineVirtualCamera is not assigned.");
         }
+
     }
 
 
