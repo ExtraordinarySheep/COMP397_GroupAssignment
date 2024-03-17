@@ -34,9 +34,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool _isGrounded;
 
     [Header("Virtual Camera")]
-    [SerializeField] CinemachineVirtualCamera _vcam;
+    [SerializeField] CinemachineFreeLook _vcam;
     [SerializeField] Button _turnCamLeftBtn;
     [SerializeField] Button _turnCamRightBtn;
+    [SerializeField] int _rotationValue; 
 
 
     [Header("Main Camera")]
@@ -54,16 +55,16 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        _vcam = GetComponent<CinemachineVirtualCamera>();
         _mcam = GetComponent<Camera>();
+        //_vcam = GetComponent<CinemachineFreeLook>(); 
         _controller = GetComponent<CharacterController>();
         _inputs = new PlayerControl();
         _inputs.Player.Move.performed += context => _move = context.ReadValue<Vector2>();
         _inputs.Player.Move.canceled += ctx => _move = Vector2.zero;
         _inputs.Player.Jump.performed += ctx => Jump();
         _audioSource = GameObject.Find("AudioController").GetComponent<AudioSource>();
-        _turnCamLeftBtn.onClick.AddListener(() => ConvertToCameraSpace(new Vector3(-1,-1,0)));
-        _turnCamRightBtn.onClick.AddListener(() => ConvertToCameraSpace(new Vector3(1, 1, 0)));
+        _turnCamLeftBtn.onClick.AddListener(() => RotateCamera(-_rotationValue));
+        _turnCamRightBtn.onClick.AddListener(() => RotateCamera(_rotationValue));
 
         //Hide Cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -122,7 +123,20 @@ public class PlayerController : MonoBehaviour
         return vectorRotatedToCameraSpace;
     }
 
-   void OnDrawGizmos()
+    void RotateCamera(int angle)
+    {
+        if (_vcam != null)
+        {
+            _vcam.m_XAxis.Value += angle; 
+        }
+        else
+        {
+            Debug.LogError("CinemachineVirtualCamera is not assigned.");
+        }
+    }
+
+
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_groundCheck.position, _groudnRadius);
