@@ -12,6 +12,7 @@ public class PauseManager : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        Time.timeScale = 1;
     }
 
     public void SaveGame()
@@ -33,5 +34,10 @@ public class PauseManager : MonoBehaviour
         saveButton.GetComponentInChildren<TMP_Text>().text = "Save";
         pausePanel.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    public void LoadGame()
+    {
+        SaveGameManager.Instance().LoadGame();
     }
 }

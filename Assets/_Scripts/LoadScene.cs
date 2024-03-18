@@ -30,6 +30,7 @@ public class LoadScene : MonoBehaviour
 
     public void LOAD_SCENE(string sceneName)
     {
+        SaveGameManager.Instance().saveLoaded = false;
         SceneManager.LoadScene(sceneName);
     }
     public void ExitButtonClicked()

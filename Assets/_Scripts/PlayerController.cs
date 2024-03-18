@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+
         _mcam = GetComponent<Camera>();
         //_vcam = GetComponent<CinemachineFreeLook>(); 
         _controller = GetComponent<CharacterController>();
@@ -73,6 +74,13 @@ public class PlayerController : MonoBehaviour
         //Hide Cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (SaveGameManager.Instance().playerPosition != Vector3.zero && SaveGameManager.Instance().saveLoaded == true)
+        {
+            _controller.enabled = false;
+            gameObject.transform.position = SaveGameManager.Instance().playerPosition;
+            _controller.enabled = true;
+        }
     }
     public void Update()
     {
@@ -230,4 +238,6 @@ public class PlayerController : MonoBehaviour
             LoadScene.Instance().MainMenuButton();
         }
     }
+
+
 }
