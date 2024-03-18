@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Button _turnCamLeftBtn;
     [SerializeField] Button _turnCamRightBtn;
     [SerializeField] int _rotationValue;
-    [SerializeField] float _currentRotationValueY;
     [SerializeField] Button _jumpBtn;
 
 
@@ -90,7 +89,7 @@ public class PlayerController : MonoBehaviour
         if (isJoystickActive)
         {
             //_vcam.m_XAxis.Value = _currentRotationValue;
-            _vcam.m_YAxis.Value = _currentRotationValueY;
+            _vcam.m_YAxis.Value = 0;
         }
 
     }
