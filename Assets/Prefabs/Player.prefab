@@ -239,7 +239,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a28743651b4115048ae1bb89dc5aaaca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouseDelta: {x: 0, y: 0}
   _speed: 10
+  _joystick: {fileID: 0}
+  _turnCamLeftBtn: {fileID: 0}
+  _turnCamRightBtn: {fileID: 0}
+  _rotationValue: 0
+  _jumpBtn: {fileID: 0}
   _controller: {fileID: 1604014865406235179}
   _gravity: -30
   _jumpHeight: 5
@@ -254,3 +260,5 @@ MonoBehaviour:
   _mcam: {fileID: 0}
   hpBarSliderForPlayer: {fileID: 0}
   _respawn: {fileID: 0}
+  itemPrefab: {fileID: 7705884500595095157, guid: a90d5696e0f591444a5806add3e0abf4, type: 3}
+  pickupRange: 2

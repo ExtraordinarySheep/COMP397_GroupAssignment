@@ -6,6 +6,8 @@ using Slider = UnityEngine.UI.Slider;
 using UnityEngine.UI; 
 using System;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -54,7 +56,14 @@ public class PlayerController : MonoBehaviour
     AudioSource _audioSource;
 
     [Header("Respawn Transform")]
-    [SerializeField] Transform _respawn; 
+    [SerializeField] Transform _respawn;
+
+
+    [Header("Item & Inventory")]
+    [SerializeField] GameObject itemPrefab;
+    [SerializeField] int pickupRange;
+    List<Item> inventory = new List<Item>();
+
 
     void Awake()
     {
@@ -100,6 +109,33 @@ public class PlayerController : MonoBehaviour
             _vcam.m_YAxis.Value = 0;
         }
 
+        // Check for player input to pick up items
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            // Raycast to detect nearby items
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, pickupRange))
+            {
+                Item item = hit.collider.GetComponent<Item>();
+                if (item != null)
+                {
+                    PickUpItem(item);
+                    Debug.Log("Picked Up Item!");
+                }
+            }
+        }
+
+        // Check for player input to drop items from inventory
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            // Drop the last item in the inventory (for demonstration purposes)
+            if (inventory.Count > 0)
+            {
+                Item lastItem = inventory[inventory.Count - 1];
+                DropItem(lastItem);
+                Debug.Log("Dropped Item!");
+            }
+        }
     }
     void OnEnable()
     {
@@ -239,5 +275,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void PickUpItem(Item item)
+    {
+        // Add the item to the player's inventory
+        inventory.Add(item);
 
+        // Remove the item from the game world
+        Destroy(item.gameObject);
+    }
+
+    public void DropItem(Item item)
+    {
+        // Remove the item from the player's inventory
+        inventory.Remove(item);
+
+        // Instantiate the item in the world at the player's position
+        Instantiate(itemPrefab, transform.position, Quaternion.identity);
+    }
 }
