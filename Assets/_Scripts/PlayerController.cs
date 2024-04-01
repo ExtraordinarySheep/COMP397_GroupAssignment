@@ -275,6 +275,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Projectile"))
+        {
+            Damage(5);
+        }
+    }
+
     public void PickUpItem(Item item)
     {
         // Add the item to the player's inventory

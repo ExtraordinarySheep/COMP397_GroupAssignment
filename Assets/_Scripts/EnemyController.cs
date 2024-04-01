@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool inRange = false;
     Vector3 destination;
     NavMeshAgent agent;
-    EnemyStates enemyState = EnemyStates.Patrolling;
+    public EnemyStates enemyState = EnemyStates.Patrolling;
 
     private void Start()
     {
@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
+            enemyState = EnemyStates.Patrolling;
             if (Vector3.Distance(destination, agent.transform.position) < 1f)
             {
                 index = (index + 1) % points.Count;
@@ -65,6 +66,7 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
+            
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * viewDistance, Color.red);
         }
     }
