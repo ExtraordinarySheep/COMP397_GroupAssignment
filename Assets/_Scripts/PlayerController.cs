@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject itemPrefab;
     [SerializeField] int pickupRange;
     List<Item> inventory = new List<Item>();
+    [SerializeField] GameObject InventoryGUI;
 
 
     void Awake()
@@ -110,19 +111,49 @@ public class PlayerController : MonoBehaviour
         }
 
         // Check for player input to pick up items
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, pickupRange, LayerMask.GetMask("Item"));
+        bool hitOnce = false;
+        foreach (var hitCollider in hitColliders)
+        {
+            Item item = hitCollider.gameObject.GetComponent<Item>();
+            if (item != null)
+            {
+                //InventoryGUI.child("PickupAlert").active = true;
+                Debug.Log("Alert Player to Pickup");
+                InventoryGUI.transform.Find("PickupAlert").gameObject.active = true;
+                hitOnce = true;
+            }
+        }
+        if (!hitOnce) { InventoryGUI.transform.Find("PickupAlert").gameObject.active = false; } // If no item is hit
         if (Input.GetKeyDown(KeyCode.E))
         {
             // Raycast to detect nearby items
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, pickupRange))
+            //RaycastHit hit;
+            //if (Physics.Raycast(transform.position, transform.forward, out hit, pickupRange))
+            //if (Physics.SphereCast(transform.position, pickupRange, transform.forward, out hit, pickupRange))
+            //Collider[] hitColliders = Physics.OverlapSphere(transform.position, pickupRange, LayerMask.GetMask("Item"));
+            foreach (var hitCollider in hitColliders)
             {
+                Item item = hitCollider.gameObject.GetComponent<Item>();
+                if (item != null)
+                {
+                    PickUpItem(item);
+                    InventoryGUI.transform.Find("ItemContainer").transform.Find("ItemPanel").gameObject.active = true;
+                    Debug.Log("Picked Up Item!");
+                }
+            }
+            /*if (Physics.OverlapSphere(transform.position, pickupRange))
+            {
+                Debug.Log("Sphere hit");
+
                 Item item = hit.collider.GetComponent<Item>();
                 if (item != null)
                 {
                     PickUpItem(item);
                     Debug.Log("Picked Up Item!");
                 }
-            }
+            }*/
         }
 
         // Check for player input to drop items from inventory
@@ -133,6 +164,7 @@ public class PlayerController : MonoBehaviour
             {
                 Item lastItem = inventory[inventory.Count - 1];
                 DropItem(lastItem);
+                InventoryGUI.transform.Find("ItemContainer").transform.Find("ItemPanel").gameObject.active = false;
                 Debug.Log("Dropped Item!");
             }
         }
@@ -273,6 +305,7 @@ public class PlayerController : MonoBehaviour
         {
             LoadScene.Instance().MainMenuButton();
         }
+
     }
 
     private void OnCollisionEnter(Collision collision)

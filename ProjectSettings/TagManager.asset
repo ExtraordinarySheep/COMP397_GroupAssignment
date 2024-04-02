@@ -8,6 +8,7 @@ TagManager:
   - DeathZone
   - Goal
   - Item
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Enemy
   - mountain
   - PostProcessing
-  - 
+  - Item
   - 
   - 
   - 
