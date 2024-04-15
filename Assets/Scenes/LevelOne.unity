@@ -3322,6 +3322,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4921157136234957996, guid: 2884628f2760aa04ca4e313f350c5f5f, type: 3}
   m_PrefabInstance: {fileID: 694781621}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &457433889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 457433890}
+  - component: {fileID: 457433891}
+  m_Layer: 0
+  m_Name: AchievementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &457433890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457433889}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.8561122, y: -8.942263, z: 44.30012}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &457433891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457433889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030d8676ecf252841ba5ebcc3ac905b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &461874976
 GameObject:
   m_ObjectHideFlags: 0
@@ -6803,7 +6847,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718506355}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25666797, y: 0.00000001662996, z: -0.0000000044163255, w: 0.9664997}
+  m_LocalRotation: {x: 0.2566679, y: -2.1257275e-16, z: -1.8504933e-16, w: 0.9664997}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7658,7 +7702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 5, z: -7}
+  m_FollowOffset: {x: 0, y: 15.99995, z: -9.999997}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -8690,7 +8734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 5, z: -7}
+  m_FollowOffset: {x: 0, y: 15.99995, z: -9.999997}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -9478,7 +9522,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25666797, y: 0.00000001662996, z: -0.0000000044163255, w: 0.9664997}
+  m_LocalRotation: {x: 0.2566679, y: 0, z: 0, w: 0.9664997}
   m_LocalPosition: {x: 0, y: 6, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11290,7 +11334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 5, z: -7}
+  m_FollowOffset: {x: 0, y: 15.99995, z: -9.999997}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -16717,7 +16761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1968482815}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2250452, y: 0.000000008382505, z: -0.000000001936107, w: 0.97434837}
+  m_LocalRotation: {x: 0.22504519, y: -0.00000004642211, z: 0.000000010722113, w: 0.97434837}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17798,6 +17842,10 @@ PrefabInstance:
       propertyPath: hpBarSliderForPlayer
       value: 
       objectReference: {fileID: 1800946973}
+    - target: {fileID: 8461816969896156865, guid: 6ebcc4e009998ad49b8c36af096de8ee, type: 3}
+      propertyPath: achievementManagerObject
+      value: 
+      objectReference: {fileID: 457433889}
     - target: {fileID: 9046416934191681008, guid: 6ebcc4e009998ad49b8c36af096de8ee, type: 3}
       propertyPath: m_Name
       value: Player
@@ -17836,3 +17884,4 @@ SceneRoots:
   - {fileID: 2093712690}
   - {fileID: 1316830628}
   - {fileID: 1917171462}
+  - {fileID: 457433890}

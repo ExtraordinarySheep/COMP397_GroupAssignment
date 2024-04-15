@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IObserver
 {
     PlayerControl _inputs;
     Vector2 _move;
@@ -43,8 +43,6 @@ public class PlayerController : MonoBehaviour
     [Header("Virtual Camera")]
     [SerializeField] CinemachineFreeLook _vcam;
 
-
-
     [Header("Main Camera")]
     [SerializeField] Camera _mcam;
 
@@ -66,6 +64,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject InventoryGUI;
 
 
+    [SerializeField] GameObject achievementManagerObject;
+    AchievementManager achievementManager;
+
     void Awake()
     {
 
@@ -80,6 +81,8 @@ public class PlayerController : MonoBehaviour
         _turnCamLeftBtn.onClick.AddListener(() => RotateCamera(-_rotationValue));
         _turnCamRightBtn.onClick.AddListener(() => RotateCamera(_rotationValue));
         _jumpBtn.onClick.AddListener(Jump);
+        achievementManager = achievementManagerObject.GetComponent<AchievementManager>();
+        achievementManager.AddObserver(this);
             
         //Hide Cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -111,7 +114,6 @@ public class PlayerController : MonoBehaviour
         }
 
         // Check for player input to pick up items
-
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, pickupRange, LayerMask.GetMask("Item"));
         bool hitOnce = false;
         foreach (var hitCollider in hitColliders)
@@ -128,11 +130,6 @@ public class PlayerController : MonoBehaviour
         if (!hitOnce) { InventoryGUI.transform.Find("PickupAlert").gameObject.active = false; } // If no item is hit
         if (Input.GetKeyDown(KeyCode.E))
         {
-            // Raycast to detect nearby items
-            //RaycastHit hit;
-            //if (Physics.Raycast(transform.position, transform.forward, out hit, pickupRange))
-            //if (Physics.SphereCast(transform.position, pickupRange, transform.forward, out hit, pickupRange))
-            //Collider[] hitColliders = Physics.OverlapSphere(transform.position, pickupRange, LayerMask.GetMask("Item"));
             foreach (var hitCollider in hitColliders)
             {
                 Item item = hitCollider.gameObject.GetComponent<Item>();
@@ -141,19 +138,21 @@ public class PlayerController : MonoBehaviour
                     PickUpItem(item);
                     InventoryGUI.transform.Find("ItemContainer").transform.Find("ItemPanel").gameObject.active = true;
                     Debug.Log("Picked Up Item!");
+
+                    
+                    // Retrieve the "Collector" achievement
+                    Achievement collectorAchievement = achievementManager.GetAchievementById("Collector");
+                    if (collectorAchievement != null)
+                    {
+                        // Unlock the "Collector" achievement
+                        achievementManager.UnlockAchievement(collectorAchievement);
+                    }
+                    else
+                    {
+                        Debug.LogError("Collector achievement not found!");
+                    }
                 }
             }
-            /*if (Physics.OverlapSphere(transform.position, pickupRange))
-            {
-                Debug.Log("Sphere hit");
-
-                Item item = hit.collider.GetComponent<Item>();
-                if (item != null)
-                {
-                    PickUpItem(item);
-                    Debug.Log("Picked Up Item!");
-                }
-            }*/
         }
 
         // Check for player input to drop items from inventory
@@ -235,6 +234,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // Method to handle notification from the AchievementManager
+    public void OnNotify(SubjectEnums subjectEnum, List<Type> parameters)
+    {
+        // Handle notifications here if needed
+    }
 
     void OnDrawGizmos()
     {
