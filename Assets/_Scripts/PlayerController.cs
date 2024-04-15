@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour, IObserver
                     
                     // Retrieve the "Collector" achievement
                     Achievement collectorAchievement = achievementManager.GetAchievementById("Collector");
-                    if (collectorAchievement != null)
+                    if (collectorAchievement != null && !achievementManager.IsAchievementUnlocked(collectorAchievement))
                     {
                         // Unlock the "Collector" achievement
                         achievementManager.UnlockAchievement(collectorAchievement);
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour, IObserver
                     }
                     else
                     {
-                        Debug.LogError("Collector achievement not found!");
+                        Debug.Log("Collector Achievement already achieved.");
                     }
                 }
             }

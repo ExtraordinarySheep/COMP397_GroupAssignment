@@ -26,7 +26,7 @@ public class AchievementManager : Subject
         }
 
         // Create the "Collector" achievement instance
-        Achievement collectorAchievement = new Achievement("Collector", "Collector", "Collect an item.");
+        Achievement collectorAchievement = new("Collector", "Collector", "Collect an item.");
 
         // Register the "Collector" achievement with the AchievementManager
         AchievementManager.instance.AddAchievement("Collector", collectorAchievement);
