@@ -24,6 +24,12 @@ public class AchievementManager : Subject
         {
             Destroy(gameObject);
         }
+
+        // Create the "Collector" achievement instance
+        Achievement collectorAchievement = new Achievement("Collector", "Collector", "Collect an item.");
+
+        // Register the "Collector" achievement with the AchievementManager
+        AchievementManager.instance.AddAchievement("Collector", collectorAchievement);
     }
 
     // Method to unlock an achievement
@@ -36,7 +42,6 @@ public class AchievementManager : Subject
 
             // Notify observers about the unlocked achievement
             NotifyObservers(SubjectEnums.Achievement, new List<Type>() { achievement.GetType() });
-            Console.WriteLine("Achievement Unlocked");
         }
     }
 

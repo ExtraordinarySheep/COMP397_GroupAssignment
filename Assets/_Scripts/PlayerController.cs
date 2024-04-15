@@ -146,6 +146,7 @@ public class PlayerController : MonoBehaviour, IObserver
                     {
                         // Unlock the "Collector" achievement
                         achievementManager.UnlockAchievement(collectorAchievement);
+                        Debug.Log("Achievement Unlocked - Collector!");
                     }
                     else
                     {
