@@ -32,6 +32,13 @@ public class AchievementManager : Subject
         AchievementManager.instance.AddAchievement("Collector", collectorAchievement);
     }
 
+    // Method to retrieve unlocked achievements
+    public List<Achievement> GetUnlockedAchievements()
+    {
+        // Return a copy of the unlocked achievements list
+        return new List<Achievement>(unlockedAchievements);
+    }
+
     // Method to unlock an achievement
     public void UnlockAchievement(Achievement achievement)
     {

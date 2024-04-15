@@ -17,15 +17,19 @@ public class PauseManager : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveGameManager.Instance().SaveGame(player.transform);
+        // Retrieve the list of unlocked achievements from the AchievementManager
+        List<Achievement> unlockedAchievements = AchievementManager.instance.GetUnlockedAchievements();
+        SaveGameManager.Instance().SaveGame(player.transform, unlockedAchievements);
         saveButton.GetComponent<Image>().color = Color.green;
         saveButton.GetComponentInChildren<TMP_Text>().text = "Saved";
+        Debug.Log("SaveGame Complete");
     }
 
     public void Resume()
     {
         pausePanel.SetActive(false);
         Time.timeScale = 1;
+        Debug.Log("Game Resumed");
     }
 
     public void Pause()
