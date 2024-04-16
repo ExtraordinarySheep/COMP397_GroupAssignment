@@ -4846,7 +4846,7 @@ GameObject:
   - component: {fileID: 1083882407471809838}
   m_Layer: 0
   m_Name: Projectile
-  m_TagString: Projectile
+  m_TagString: QuestDestination
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
