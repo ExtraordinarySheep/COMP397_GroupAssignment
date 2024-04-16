@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01466a0c6d435684d840bc5cb1e2d07b, type: 3}
-  m_Name: Objective2
+  m_Name: Objective_Kill_1
   m_EditorClassIdentifier: 
-  ObjectiveName: Collect 1 Item
-  ObjectiveType: 1
-  TargetObject: {fileID: 7705884500595095157, guid: a90d5696e0f591444a5806add3e0abf4, type: 3}
+  ObjectiveName: Kill 1 Enemy
+  ObjectiveDescription: Kill 1 of any enemy near you.
+  ObjectiveType: 2
   Progress: 0
   ProgressRequired: 1
   Completed: 0

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01466a0c6d435684d840bc5cb1e2d07b, type: 3}
-  m_Name: Objective1
+  m_Name: Objective_Collect_1
   m_EditorClassIdentifier: 
-  ObjectiveName: Kill 3 Enemies
-  ObjectiveType: 0
-  TargetObject: {fileID: 342398272273938498, guid: 2884628f2760aa04ca4e313f350c5f5f, type: 3}
-  Progress: 0
-  ProgressRequired: 3
-  Completed: 0
+  ObjectiveName: Collect 1 Item
+  ObjectiveDescription: Collect any wood you find, Drop it, then Collect it again.
+  ObjectiveType: 3
+  Progress: 1
+  ProgressRequired: 1
+  Completed: 1

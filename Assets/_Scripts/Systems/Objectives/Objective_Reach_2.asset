@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01466a0c6d435684d840bc5cb1e2d07b, type: 3}
-  m_Name: Objective4
+  m_Name: Objective_Reach_2
   m_EditorClassIdentifier: 
-  ObjectiveName: Reach The Location
-  ObjectiveType: 2
-  TargetObject: {fileID: 0}
+  ObjectiveName: Hand In Quest
+  ObjectiveDescription: Head over to the house to hand in your quest!
+  ObjectiveType: 4
   Progress: 0
-  ProgressRequired: 0
+  ProgressRequired: 1
   Completed: 0

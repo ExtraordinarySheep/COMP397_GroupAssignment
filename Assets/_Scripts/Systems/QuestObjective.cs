@@ -8,7 +8,6 @@ public class QuestObjective : ScriptableObject
     public string ObjectiveName;
     public string ObjectiveDescription;
     public QuestEnums ObjectiveType;
-    public GameObject TargetObject;
 
     public int Progress;
     public int ProgressRequired;

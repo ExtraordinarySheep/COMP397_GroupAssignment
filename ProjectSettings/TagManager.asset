@@ -9,6 +9,7 @@ TagManager:
   - Goal
   - Item
   - Projectile
+  - QuestDestination
   - PlayerProjectile
   layers:
   - Default
@@ -24,7 +25,7 @@ TagManager:
   - mountain
   - PostProcessing
   - Item
-  - QuestLocation
+  - QuestDestination
   - 
   - 
   - 

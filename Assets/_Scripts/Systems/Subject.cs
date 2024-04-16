@@ -11,7 +11,7 @@ public abstract class Subject : MonoBehaviour
 
     public void AddObserver(IObserver observer) => _observers.Add(observer);
     public void RemoveObserver(IObserver observer) => _observers.Remove(observer);
-    public void NotifyObservers(SubjectEnums subjectEnum, List<Type> parameters)
+    public void NotifyObservers(SubjectEnums subjectEnum, List<System.Object> parameters)
     {
         _observers.ForEach(_observer => {
             _observer.OnNotify(subjectEnum, parameters);
