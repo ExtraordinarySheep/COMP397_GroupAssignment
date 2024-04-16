@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AchievementManager : Subject
@@ -12,6 +13,9 @@ public class AchievementManager : Subject
 
     // Dictionary to store achievements by their identifiers
     private Dictionary<string, Achievement> achievementsById = new Dictionary<string, Achievement>();
+
+    public TMP_Text achievementNameText;
+    public GameObject achievementNotifications;
 
     private void Awake()
     {
@@ -46,6 +50,9 @@ public class AchievementManager : Subject
         {
             achievement.unlocked = true;
             unlockedAchievements.Add(achievement);
+
+            achievementNameText.text = achievement.name;
+            achievementNotifications.SetActive(true);
 
             // Notify observers about the unlocked achievement
             NotifyObservers(SubjectEnums.Achievement, new List<Type>() { achievement.GetType() });
