@@ -114,6 +114,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6928952170839374347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4765801218747217049}
+  m_Layer: 7
+  m_Name: ProjectileSpawnForward
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4765801218747217049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6928952170839374347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8394044987955814458}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9046416934191681008
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +158,7 @@ GameObject:
   - component: {fileID: 4888524632392052720}
   - component: {fileID: 1604014865406235179}
   - component: {fileID: 8461816969896156865}
+  - component: {fileID: 1111039404223764287}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -149,6 +181,7 @@ Transform:
   m_Children:
   - {fileID: 8877331219102775876}
   - {fileID: 1212536558615206615}
+  - {fileID: 4765801218747217049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4634056664199778639
@@ -240,11 +273,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseDelta: {x: 0, y: 0}
-  _speed: 10
+  _speed: 9
   _joystick: {fileID: 0}
   _turnCamLeftBtn: {fileID: 0}
   _turnCamRightBtn: {fileID: 0}
-  _rotationValue: 0
+  _rotationValue: 10
   _jumpBtn: {fileID: 0}
   _controller: {fileID: 1604014865406235179}
   _gravity: -30
@@ -262,3 +295,21 @@ MonoBehaviour:
   _respawn: {fileID: 0}
   itemPrefab: {fileID: 7705884500595095157, guid: a90d5696e0f591444a5806add3e0abf4, type: 3}
   pickupRange: 2
+  InventoryGUI: {fileID: 0}
+  achievementManagerObject: {fileID: 0}
+--- !u!114 &1111039404223764287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9046416934191681008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62bbac04a0b46f4a9929060a8719aec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectilePrefab: {fileID: 8803098489298369388, guid: 68be693e063165c45af957d08324825c, type: 3}
+  _projectileSpawns:
+  - {fileID: 4765801218747217049}
+  _projectileForce: 10

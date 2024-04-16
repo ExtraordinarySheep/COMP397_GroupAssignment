@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class EnemyController : MonoBehaviour
     Vector3 destination;
     NavMeshAgent agent;
     public EnemyStates enemyState = EnemyStates.Patrolling;
+    private int health = 10; 
 
     private void Start()
     {
@@ -69,5 +71,22 @@ public class EnemyController : MonoBehaviour
             
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * viewDistance, Color.red);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
+        {
+            health -= 5;
+            if (health < 0)
+            {
+                Die(); 
+            }
+        }
+    }
+
+    private void Die()
+    {
+        this.gameObject.SetActive(false);
     }
 }

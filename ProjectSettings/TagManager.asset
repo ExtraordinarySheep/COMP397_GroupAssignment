@@ -9,6 +9,7 @@ TagManager:
   - Goal
   - Item
   - Projectile
+  - PlayerProjectile
   layers:
   - Default
   - TransparentFX

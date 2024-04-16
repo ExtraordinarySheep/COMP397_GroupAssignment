@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectileManager : PersistentSingleton<EnemyProjectileManager>
+public class ProjectilePoolManager : PersistentSingleton<ProjectilePoolManager>
 {
-    [SerializeField] private EnemyProjectile _projectilePoolPrefab;
-    private Queue<EnemyProjectile> _projectilePool = new Queue<EnemyProjectile>();
+    [SerializeField] private ProjectilePooled _projectilePoolPrefab; 
+    private Queue<ProjectilePooled> _projectilePool = new Queue<ProjectilePooled>();
 
-    public EnemyProjectile Get()
+    public ProjectilePooled Get()
     {
-        if (_projectilePool.Count == 0)
+        if ( _projectilePool.Count == 0)
         {
-            AddProjectile(1);
+            AddProjectile(1); 
         }
         return _projectilePool.Dequeue();
     }
@@ -20,13 +20,14 @@ public class EnemyProjectileManager : PersistentSingleton<EnemyProjectileManager
         for (int i = 0; i < count; i++)
         {
             var projectile = Instantiate(_projectilePoolPrefab);
-            projectile.gameObject.SetActive(false);
+            projectile.gameObject.SetActive(false); 
             _projectilePool.Enqueue(projectile);
         }
     }
-    public void ReturnToPool(EnemyProjectile projectile)
+    public void ReturnToPool(ProjectilePooled projectile)
     {
         projectile.gameObject.SetActive(false);
         _projectilePool.Enqueue(projectile);
     }
 }
+
