@@ -97,6 +97,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
+            Destroy(collision.gameObject);
             health -= 5;
             if (health < 0)
             {
