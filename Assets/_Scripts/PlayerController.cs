@@ -8,9 +8,11 @@ using System;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using System.Collections.Generic;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour, IObserver
+public class PlayerController : Subject, IObserver
 {
     PlayerControl _inputs;
     Vector2 _move;
@@ -67,6 +69,9 @@ public class PlayerController : MonoBehaviour, IObserver
     [SerializeField] GameObject achievementManagerObject;
     AchievementManager achievementManager;
 
+    [SerializeField] public QuestSystem activeQuest;
+    [SerializeField] public GameObject QuestUI;
+
     void Awake()
     {
 
@@ -122,7 +127,7 @@ public class PlayerController : MonoBehaviour, IObserver
             if (item != null)
             {
                 //InventoryGUI.child("PickupAlert").active = true;
-                Debug.Log("Alert Player to Pickup");
+                //Debug.Log("Alert Player to Pickup");
                 InventoryGUI.transform.Find("PickupAlert").gameObject.active = true;
                 hitOnce = true;
             }
@@ -137,7 +142,7 @@ public class PlayerController : MonoBehaviour, IObserver
                 {
                     PickUpItem(item);
                     InventoryGUI.transform.Find("ItemContainer").transform.Find("ItemPanel").gameObject.active = true;
-                    Debug.Log("Picked Up Item!");
+                    //Debug.Log("Picked Up Item!");
 
                     
                     // Retrieve the "Collector" achievement
@@ -151,6 +156,13 @@ public class PlayerController : MonoBehaviour, IObserver
                     else
                     {
                         Debug.Log("Collector Achievement already achieved.");
+                    }
+
+                    if (activeQuest.GetCurrentObjective().ObjectiveType == QuestEnums.Collect) // If quest is on an escape objective, add progress.
+                    {
+                        List<System.Object> specifics = new List<System.Object>(); specifics.Add("Tutorial"); specifics.Add(1);
+
+                        this.GetComponent<Subject>().NotifyObservers(SubjectEnums.Quest, specifics);
                     }
                 }
             }
@@ -167,6 +179,27 @@ public class PlayerController : MonoBehaviour, IObserver
                 InventoryGUI.transform.Find("ItemContainer").transform.Find("ItemPanel").gameObject.active = false;
                 Debug.Log("Dropped Item!");
             }
+        }
+
+        // Updating Quest UI (can definitely be optimized)
+        if (activeQuest != null)
+        {
+            if (activeQuest.IsQuestComplete() == true)
+            {
+                activeQuest = null;
+            }
+
+            QuestUI.transform.Find("QuestTitle").gameObject.GetComponent<TextMeshProUGUI>().text = activeQuest.QuestName;
+            QuestUI.transform.Find("ObjectiveName").gameObject.GetComponent<TextMeshProUGUI>().text = activeQuest.GetCurrentObjective().ObjectiveName;
+            QuestUI.transform.Find("ObjectiveDescription").gameObject.GetComponent<TextMeshProUGUI>().text = activeQuest.GetCurrentObjective().ObjectiveDescription;
+            QuestUI.transform.Find("ProgressMeter").gameObject.GetComponent<TextMeshProUGUI>().text = "[" + activeQuest.GetCurrentObjective().Progress + "/" + activeQuest.GetCurrentObjective().ProgressRequired + "]";
+        }
+        else
+        {
+            QuestUI.transform.Find("QuestTitle").gameObject.GetComponent<TextMeshProUGUI>().text = "No Active Quest";
+            QuestUI.transform.Find("ObjectiveName").gameObject.GetComponent<TextMeshProUGUI>().text = "Empty";
+            QuestUI.transform.Find("ObjectiveDescription").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+            QuestUI.transform.Find("ProgressMeter").gameObject.GetComponent<TextMeshProUGUI>().text = "";
         }
     }
     void OnEnable()
@@ -236,7 +269,7 @@ public class PlayerController : MonoBehaviour, IObserver
     }
 
     // Method to handle notification from the AchievementManager
-    public void OnNotify(SubjectEnums subjectEnum, List<Type> parameters)
+    public void OnNotify(SubjectEnums subjectEnum, List<System.Object> parameters)
     {
         // Handle notifications here if needed
     }
@@ -305,10 +338,28 @@ public class PlayerController : MonoBehaviour, IObserver
         else if (other.CompareTag("Enemy"))
         {
             Damage(5);
+
+            if (activeQuest.GetCurrentObjective().ObjectiveType == QuestEnums.GetHurt) // If quest is on a get hurt objective, add progress.
+            {
+                Debug.Log("Send GetHurt Progress");
+
+                List<System.Object> specifics = new List<System.Object>(); specifics.Add("Tutorial"); specifics.Add(1);
+
+                this.GetComponent<Subject>().NotifyObservers(SubjectEnums.Quest, specifics);
+            }
         }
         else if (other.CompareTag("Goal"))
         {
             LoadScene.Instance().MainMenuButton();
+        }
+        else if (other.CompareTag("QuestDestination"))
+        {
+            if (activeQuest.GetCurrentObjective().ObjectiveType == QuestEnums.Reach && other.gameObject.name == activeQuest.GetCurrentTarget().name) // If quest is on a reach destination objective & player touches objective, add progress.
+            {
+                List<System.Object> specifics = new List<System.Object>(); specifics.Add("Tutorial"); specifics.Add(1);
+
+                this.GetComponent<Subject>().NotifyObservers(SubjectEnums.Quest, specifics);
+            }
         }
 
     }
@@ -318,6 +369,13 @@ public class PlayerController : MonoBehaviour, IObserver
         if (collision.gameObject.CompareTag("Projectile"))
         {
             Damage(5);
+
+            if (activeQuest.GetCurrentObjective().ObjectiveType == QuestEnums.GetHurt) // If quest is on an escape objective, add progress.
+            {
+                List<System.Object> specifics = new List<System.Object>(); specifics.Add("Tutorial"); specifics.Add(1);
+
+                this.GetComponent<Subject>().NotifyObservers(SubjectEnums.Quest, specifics);
+            }
         }
     }
 

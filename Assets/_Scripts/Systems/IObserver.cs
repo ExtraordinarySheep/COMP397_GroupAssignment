@@ -4,6 +4,6 @@ using System.Collections.Generic;
 public interface IObserver
 {
 
-    public void OnNotify(SubjectEnums subjectEnum, List<Type> parameters);
+    public void OnNotify(SubjectEnums subjectEnum, List<Object> parameters);
 
 }

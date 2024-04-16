@@ -55,7 +55,7 @@ public class AchievementManager : Subject
             achievementNotifications.SetActive(true);
 
             // Notify observers about the unlocked achievement
-            NotifyObservers(SubjectEnums.Achievement, new List<Type>() { achievement.GetType() });
+            NotifyObservers(SubjectEnums.Achievement, new List<System.Object>() { achievement.GetType() });
         }
     }
 
